@@ -1,0 +1,264 @@
+#This program creates  minions 
+import random
+
+#Body Variables
+M_bdy= get_height()-100
+M_ttl_width = 120
+
+#Head Variables
+M_head_rad= M_ttl_width/2
+
+#Strap Variables
+M_strp_len = 100
+M_strp_Angl=13
+M_strp_soff=36
+M_strp_eoff= M_strp_soff+ M_strp_Angl
+M_strp_sangl=360-M_strp_eoff
+M_strp_eangl=360-M_strp_soff
+M_strp_sangl2=180+ M_strp_soff
+M_strp_eangl2=180+ M_strp_eoff
+
+#glass and Eye Variables
+M_gls_strp_H= 18
+M_gls_rad=30
+M_eye_rad= M_gls_rad-5
+M_ris_rad=M_gls_rad-18
+M_eyeppl_radS=M_gls_rad-27
+
+#Mouth Variables
+M_mth_rad= 15
+M_mth_sangl= 180
+M_mth_eangl=360
+
+#Leg Variables
+M_leg_h= M_head_rad+15
+M_leg_w= 50
+
+#Arm Variables 
+M_arm_w=20
+nos = 1
+
+#Chooses the X position as a random point on the screen  
+def pickXPos(n):
+    #Xpos= random.randint(0,get_width()-M_ttl_width)
+    if n == 0:
+        Xpos = 40
+    else:
+        Xpos = 250
+    print(Xpos)
+    return Xpos
+
+#chooses the height randomly between 150 and 250
+def pickHeight():
+    height= random.randint(150, 195)
+    return height
+
+
+#draws the body of the minion 
+def drawBody(M_bdy_XP,height,M_bdy_YP):
+    
+    body = Rectangle(M_ttl_width, height)
+    body.set_position(M_bdy_XP, M_bdy_YP)
+    body.set_color(Color.yellow)
+    add(body)
+
+
+#draws the face of the minion
+def drawFace(M_bdy_XP,M_bdy_YP,i):
+    face = Circle(M_head_rad)
+    face.set_position(M_bdy_XP+M_ttl_width/2, M_bdy_YP)
+    face.set_color(Color.yellow)
+    add(face)
+
+    #chooses how many eyes to draw randomly    
+    #numEyes= random.randint(1, 2)
+    numEyes= i+1
+    print("num eye:", numEyes)
+    if numEyes==1:
+        drawglasssAndEyes(M_bdy_XP+M_ttl_width/2, M_bdy_YP, M_bdy_XP)
+    else:
+        drawglasssAndEyes(M_bdy_XP+M_ttl_width/4, M_bdy_YP, M_bdy_XP)
+        drawglasssAndEyes(M_bdy_XP+M_ttl_width*3/4, M_bdy_YP, M_bdy_XP)
+    
+
+#draws the eyes and glasss
+def drawglasssAndEyes(eye1xpos, eyeypos, M_bdy_XP):
+    if (eye1xpos!=M_bdy_XP+M_ttl_width*3/4):
+        glassStrap = Rectangle(M_ttl_width,M_gls_strp_H)
+        glassStrap.set_position(M_bdy_XP, eyeypos)
+        glassStrap.set_color(Color.black)
+        add(glassStrap)
+    
+    glass = Circle(M_gls_rad)
+    glass.set_position(eye1xpos, eyeypos)
+    glass.set_color(Color.gray)
+    add(glass)
+    
+    eye = Circle(M_eye_rad)
+    eye.set_position(eye1xpos, eyeypos)
+    eye.set_color(Color.white)
+    add(eye)
+    
+    iris = Circle(M_ris_rad)
+    iris.set_position(eye1xpos, eyeypos)
+    iris.set_color(Color.orange)
+    add(iris)
+    
+    pupil = Circle(M_eyeppl_radS)
+    pupil.set_position(eye1xpos, eyeypos)
+    pupil.set_color(Color.black)
+    add(pupil)
+
+
+#draws the bottom of the minion
+def drawBottom(M_bdy_XP,height,M_bdy_YP):
+    face = Circle(M_head_rad)
+    face.set_position(M_bdy_XP+M_ttl_width/2, M_bdy_YP+height)
+    face.set_color(Color.blue)
+    add(face)
+
+
+#draws the mouth of the minion
+def drawMouth(M_bdy_XP, height,M_bdy_YP):
+    mouth = Arc(M_mth_rad, M_mth_sangl, M_mth_eangl, 0)
+    mouth.set_position(M_bdy_XP+M_ttl_width/2, M_bdy_YP+height*3/8)
+    mouth.set_color(Color.black)
+    add(mouth)
+    
+#draws the mouth of the minion
+def drawMouth1(M_bdy_XP, height,M_bdy_YP):
+    mth = Circle(13)
+    mth.set_position(M_bdy_XP+M_ttl_width/2.5+13, M_bdy_YP+height*3/10+16)
+    mth.set_color(Color.black)
+    add(mth)
+    mouth = Rectangle(28,12)
+    mouth.set_position(M_bdy_XP+M_ttl_width/2.5, M_bdy_YP+height*3/10)
+    mouth.set_color(Color.yellow)
+    add(mouth)
+    
+
+
+#draws the clothes for the minion 
+def drawClothes(M_bdy_XP, height,M_bdy_YP):
+    clothes1Height=height/6
+    clothes2Width= M_ttl_width/2 
+    clothes2Height= height/5
+    
+    #draws the bottom part of the overalls
+    clothes1 = Rectangle(M_ttl_width, clothes1Height)
+    clothes1.set_position(M_bdy_XP, M_bdy_YP+height-clothes1Height)
+    clothes1.set_color(Color.blue)
+    add(clothes1)
+    
+    #draws the top part of the overalls over the chest
+    clothes2 = Rectangle(clothes2Width, clothes2Height)
+    clothes2.set_position(M_bdy_XP+M_ttl_width/2-clothes2Width/2, M_bdy_YP+height-clothes1Height-clothes2Height)
+    clothes2.set_color(Color.blue)
+    add(clothes2)
+
+    #draws the straps for the overalls on the minion 
+    
+    #draws left strap
+    strap1 = Rectangle(40 ,8)
+    strap1.set_position(M_bdy_XP+5, M_bdy_YP+height/2)
+    strap1.set_rotation(70)
+    strap1.set_color(Color.blue)
+    add(strap1)
+    
+    #draws right strap
+    strap2 = Rectangle(40,8)
+    strap2.set_position(M_bdy_XP+M_ttl_width-50, M_bdy_YP+height/2)
+    strap2.set_rotation(-70)
+    strap2.set_color(Color.blue)
+    add(strap2)
+
+#draws legs on the minion 
+def drawLegs(M_bdy_XP, height,M_bdy_YP):
+    
+    #draws left leg
+    leg1 = Rectangle(M_leg_w, M_leg_h)
+    leg1.set_position(M_bdy_XP+M_ttl_width/16, M_bdy_YP+height)
+    leg1.set_color(Color.blue)
+    add(leg1)
+   
+   #draws right leg
+    leg2 = Rectangle(M_leg_w, M_leg_h)
+    leg2.set_position(M_bdy_XP+M_ttl_width-M_leg_w-M_ttl_width/16, M_bdy_YP+height)
+    leg2.set_color(Color.blue)
+    add(leg2)
+
+#draws the arms for the minion 
+def drawArms(M_bdy_XP,minionHeight,M_bdy_YP):
+    armLength= minionHeight/2.5 
+    
+    #draws left arm
+    arm1 = Rectangle(armLength, M_arm_w)
+    arm1.set_position(M_bdy_XP-armLength+ M_arm_w, M_bdy_YP+minionHeight/2)
+    arm1.set_rotation(-95)
+    arm1.set_color(Color.yellow)
+    add(arm1)
+    
+    #draws right arm 
+    arm2 = Rectangle(armLength, M_arm_w)
+    arm2.set_position(M_bdy_XP+M_ttl_width- M_arm_w, M_bdy_YP+minionHeight/2)
+    arm2.set_rotation(70)
+    arm2.set_color(Color.yellow)
+    add(arm2)
+
+#draws all the pieces of a minion and chooses the x position, minion height, and y position
+def drawMinion(i):
+    M_bdy_XP= pickXPos(i)
+    minionHeight= pickHeight()
+    M_bdy_YP= M_bdy-minionHeight
+    
+    drawArms(M_bdy_XP,minionHeight,M_bdy_YP)
+    drawBottom(M_bdy_XP,minionHeight,M_bdy_YP)
+    drawBody(M_bdy_XP,minionHeight,M_bdy_YP)
+    drawFace(M_bdy_XP,M_bdy_YP,i)
+    drawMouth1(M_bdy_XP,minionHeight,M_bdy_YP)
+    drawClothes(M_bdy_XP,minionHeight,M_bdy_YP)
+    drawLegs(M_bdy_XP, minionHeight,M_bdy_YP)
+    nos = i
+    print(nos)
+    return(nos)
+    
+#Adds minions to the screen
+def addMinion():
+    for i in range(2):
+        drawMinion(i)
+        #print(nos)
+
+def drw_cir(radn,setx,sety,color):
+    tc = Circle(radn)
+    tc.set_position(setx,sety)
+    tc.set_color(color)
+    add(tc)
+    
+def banana():
+    drw_cir(3,135,30,Color.black)
+    drw_cir(4,193,35,Color.black)
+    
+    drw_cir(9,140,39,Color.yellow)
+    drw_cir(9,145,42,Color.yellow)
+    drw_cir(9,150,47,Color.yellow)
+    drw_cir(9,155,49,Color.yellow)
+    drw_cir(9,160,50,Color.yellow)
+    drw_cir(9,165,47,Color.yellow)
+    drw_cir(9,175,44,Color.yellow)
+    drw_cir(9,180,43,Color.yellow)
+    drw_cir(9,185,42,Color.yellow)
+    ln = Line(138,32,155,50)
+    ln.set_color(Color.gray)
+    add(ln)
+    ln = Line(155,50,185,44)
+    ln.set_color(Color.gray)
+    add(ln)
+    
+banana()    
+        
+#Prompts the user to decide how many minions they want to add to the screen
+def start():
+    addMinion()
+    print("done!!!")
+    
+start()
